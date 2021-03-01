@@ -3,7 +3,7 @@ package kz.iitu.bussystem.entity.security;
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "security" , name = "roles")
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
