@@ -26,11 +26,11 @@ public class StationPriceServiceImpl implements StationService {
 
     @Override
     public void deleteStation(Station station) {
-
+        stationRepository.delete(station);
     }
 
     @Override
     public Collection<Station> getStation() {
-        return null;
+        return stationRepository.findAll();
     }
 }
