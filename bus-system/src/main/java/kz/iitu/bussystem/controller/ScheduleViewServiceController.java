@@ -1,5 +1,6 @@
 package kz.iitu.bussystem.controller;
 
+import kz.iitu.bussystem.dto.ScheduleViewDTO;
 import kz.iitu.bussystem.entity.SeatPrice;
 import kz.iitu.bussystem.service.ScheduleViewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/schedule")
 public class ScheduleViewServiceController {
     @Autowired
     ScheduleViewService scheduleViewService;
 
-    @GetMapping(value = "/get")
+    @PostMapping(value = "/get")
     public ResponseEntity<Object>
-    getScheduleView(@RequestParam(value = "cityFrom", required = false) String cityFrom,
-                    @RequestParam(value = "cityTo", required = false) String cityTo,
-                    @RequestParam(value = "date", required = false) LocalDateTime date) {
-        System.out.println();
-        return new ResponseEntity<>(scheduleViewService.getScheduleView(cityFrom, cityTo, date), HttpStatus.OK);
+    getScheduleView(@RequestBody ScheduleViewDTO scheduleViewDTO) {
+        return new ResponseEntity<>(scheduleViewService.getScheduleView(scheduleViewDTO), HttpStatus.OK);
     }
 }

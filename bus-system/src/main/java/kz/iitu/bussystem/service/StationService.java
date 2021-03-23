@@ -10,4 +10,5 @@ public interface StationService {
     public abstract void updateStation(Station station);
     public abstract void deleteStation(Station station);
     public abstract Collection<Station> getStation();
+    public abstract Collection<String> getStationCities();
 }

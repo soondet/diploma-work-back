@@ -39,4 +39,9 @@ public class StationServiceController {
         stationService.createStation(station);
         return new ResponseEntity<>("Station is created successfully", HttpStatus.CREATED);
     }
+
+    @GetMapping(value = "/cities")
+    public ResponseEntity<Object> getStationCities() {
+        return new ResponseEntity<>(stationService.getStationCities(), HttpStatus.OK);
+    }
 }

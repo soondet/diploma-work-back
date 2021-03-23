@@ -33,4 +33,9 @@ public class StationPriceServiceImpl implements StationService {
     public Collection<Station> getStation() {
         return stationRepository.findAll();
     }
+
+    @Override
+    public Collection<String> getStationCities() {
+        return stationRepository.findAllStationCities();
+    }
 }
