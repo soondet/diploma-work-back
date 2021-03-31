@@ -15,6 +15,11 @@ public class CityServiceImpl implements CityService {
     private CityRepository cityRepository;
 
     @Override
+    public Collection<City> getCity() {
+        return cityRepository.findAll();
+    }
+
+    @Override
     public void createCity(City city) {
         cityRepository.save(city);
     }
@@ -32,10 +37,6 @@ public class CityServiceImpl implements CityService {
         cityRepository.delete(city);
     }
 
-    @Override
-    public Collection<City> getCity() {
-        return cityRepository.findAll();
-    }
 
     @Override
     public List<String> getCityNames() {

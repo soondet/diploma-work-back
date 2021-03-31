@@ -14,6 +14,11 @@ public class AddressServiceController {
     @Autowired
     AddressService addressService;
 
+    @GetMapping(value = "/get")
+    public ResponseEntity<Object> getAddress() {
+        return new ResponseEntity<>(addressService.getAddress(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/city")
     public ResponseEntity<Object> getAddressByCity(@RequestParam Long cityId) {
         return new ResponseEntity<Object>(addressService.getAddressesByCityId(cityId), HttpStatus.OK);

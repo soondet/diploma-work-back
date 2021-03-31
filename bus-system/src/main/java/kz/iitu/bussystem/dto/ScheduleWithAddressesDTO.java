@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 public class ScheduleWithAddressesDTO {
+    //http://localhost:8080/api/schedule/get
+
     private Long scheduleId;
-    private String scheduleStatus;
+    private Boolean scheduleStatus;
     private Date scheduleDate;
     private Double schedulePrice;
+    private Integer scheduleAvailableSeatNumber;
 
     private Long routeId;
     private Double routeDistance;
@@ -16,29 +19,33 @@ public class ScheduleWithAddressesDTO {
     private Long busId;
     private String busStateNumber;
     private String busAvailability;
-    private Integer busAvailableSeatNumber;
+    private Integer seatNumber;
 
     private Long busModelId;
     private String busModelName;
     private Integer busModelSeatNumber;
+    private Integer busX;
+    private Integer busY;
 
     private List<AddressesByRouteIdDTO> addresses;
 
-
-    public ScheduleWithAddressesDTO(Long scheduleId, String scheduleStatus, Date scheduleDate, Double schedulePrice, Long routeId, Double routeDistance, Long busId, String busStateNumber, String busAvailability, Integer busAvailableSeatNumber, Long busModelId, String busModelName, Integer busModelSeatNumber, List<AddressesByRouteIdDTO> addresses) {
+    public ScheduleWithAddressesDTO(Long scheduleId, Boolean scheduleStatus, Date scheduleDate, Double schedulePrice, Integer scheduleAvailableSeatNumber, Long routeId, Double routeDistance, Long busId, String busStateNumber, String busAvailability, Integer seatNumber, Long busModelId, String busModelName, Integer busModelSeatNumber, Integer busX, Integer busY, List<AddressesByRouteIdDTO> addresses) {
         this.scheduleId = scheduleId;
         this.scheduleStatus = scheduleStatus;
         this.scheduleDate = scheduleDate;
         this.schedulePrice = schedulePrice;
+        this.scheduleAvailableSeatNumber = scheduleAvailableSeatNumber;
         this.routeId = routeId;
         this.routeDistance = routeDistance;
         this.busId = busId;
         this.busStateNumber = busStateNumber;
         this.busAvailability = busAvailability;
-        this.busAvailableSeatNumber = busAvailableSeatNumber;
+        this.seatNumber = seatNumber;
         this.busModelId = busModelId;
         this.busModelName = busModelName;
         this.busModelSeatNumber = busModelSeatNumber;
+        this.busX = busX;
+        this.busY = busY;
         this.addresses = addresses;
     }
 
@@ -50,11 +57,11 @@ public class ScheduleWithAddressesDTO {
         this.scheduleId = scheduleId;
     }
 
-    public String getScheduleStatus() {
+    public Boolean getScheduleStatus() {
         return scheduleStatus;
     }
 
-    public void setScheduleStatus(String scheduleStatus) {
+    public void setScheduleStatus(Boolean scheduleStatus) {
         this.scheduleStatus = scheduleStatus;
     }
 
@@ -72,6 +79,14 @@ public class ScheduleWithAddressesDTO {
 
     public void setSchedulePrice(Double schedulePrice) {
         this.schedulePrice = schedulePrice;
+    }
+
+    public Integer getScheduleAvailableSeatNumber() {
+        return scheduleAvailableSeatNumber;
+    }
+
+    public void setScheduleAvailableSeatNumber(Integer scheduleAvailableSeatNumber) {
+        this.scheduleAvailableSeatNumber = scheduleAvailableSeatNumber;
     }
 
     public Long getRouteId() {
@@ -114,12 +129,12 @@ public class ScheduleWithAddressesDTO {
         this.busAvailability = busAvailability;
     }
 
-    public Integer getBusAvailableSeatNumber() {
-        return busAvailableSeatNumber;
+    public Integer getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setBusAvailableSeatNumber(Integer busAvailableSeatNumber) {
-        this.busAvailableSeatNumber = busAvailableSeatNumber;
+    public void setSeatNumber(Integer seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
     public Long getBusModelId() {
@@ -144,6 +159,22 @@ public class ScheduleWithAddressesDTO {
 
     public void setBusModelSeatNumber(Integer busModelSeatNumber) {
         this.busModelSeatNumber = busModelSeatNumber;
+    }
+
+    public Integer getBusX() {
+        return busX;
+    }
+
+    public void setBusX(Integer busX) {
+        this.busX = busX;
+    }
+
+    public Integer getBusY() {
+        return busY;
+    }
+
+    public void setBusY(Integer busY) {
+        this.busY = busY;
     }
 
     public List<AddressesByRouteIdDTO> getAddresses() {

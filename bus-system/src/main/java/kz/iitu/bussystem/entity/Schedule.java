@@ -1,10 +1,13 @@
 package kz.iitu.bussystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -13,6 +16,10 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "schedule")
+    private List<Booking> bookings;
 
     //Foreign Key
     @ManyToOne
@@ -23,22 +30,26 @@ public class Schedule {
     private Bus bus;
 
     @Column(name = "status")
-    private String status;
+    private Boolean status;
     @Column(name = "date")
     private Date date;
     @Column(name = "price")
     private Double price;
+    @Column(name = "available_seat_number")
+    private Integer availableSeatNumber;
 
     public Schedule() {
     }
 
-    public Schedule(Long id, Route route, Bus bus, String status, Date date, Double price) {
+    public Schedule(Long id, List<Booking> bookings, Route route, Bus bus, Boolean status, Date date, Double price, Integer availableSeatNumber) {
         this.id = id;
+        this.bookings = bookings;
         this.route = route;
         this.bus = bus;
         this.status = status;
         this.date = date;
         this.price = price;
+        this.availableSeatNumber = availableSeatNumber;
     }
 
     public Long getId() {
@@ -47,6 +58,14 @@ public class Schedule {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public Route getRoute() {
@@ -65,11 +84,11 @@ public class Schedule {
         this.bus = bus;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -87,5 +106,13 @@ public class Schedule {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getAvailableSeatNumber() {
+        return availableSeatNumber;
+    }
+
+    public void setAvailableSeatNumber(Integer availableSeatNumber) {
+        this.availableSeatNumber = availableSeatNumber;
     }
 }

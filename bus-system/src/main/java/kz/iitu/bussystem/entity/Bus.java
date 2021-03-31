@@ -29,20 +29,20 @@ public class Bus {
     private String stateNumber;
     @Column(name = "availability")
     private String availability;
-    @Column(name = "available_seat_number")
-    private Integer availableSeatNumber;
+    @Column(name = "seat_number")
+    private Integer seatNumber;
 
     public Bus() {
     }
 
-    public Bus(Long id, List<Schedule> schedules, Park park, BusModel busModel, String stateNumber, String availability, Integer availableSeatNumber) {
+    public Bus(Long id, List<Schedule> schedules, Park park, BusModel busModel, String stateNumber, String availability, Integer seatNumber) {
         this.id = id;
         this.schedules = schedules;
         this.park = park;
         this.busModel = busModel;
         this.stateNumber = stateNumber;
         this.availability = availability;
-        this.availableSeatNumber = availableSeatNumber;
+        this.seatNumber = seatNumber;
     }
 
     public Long getId() {
@@ -93,11 +93,11 @@ public class Bus {
         this.availability = availability;
     }
 
-    public Integer getAvailableSeatNumber() {
-        return availableSeatNumber;
+    public Integer getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setAvailableSeatNumber(Integer availableSeatNumber) {
-        this.availableSeatNumber = availableSeatNumber;
+    public void setSeatNumber(Integer seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }

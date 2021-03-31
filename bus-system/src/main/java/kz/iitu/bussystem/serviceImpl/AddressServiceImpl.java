@@ -7,12 +7,18 @@ import kz.iitu.bussystem.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
 public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressRepository addressRepository;
+
+    @Override
+    public Collection<Address> getAddress() {
+        return addressRepository.findAll();
+    }
 
     @Override
     public List<Address> getAddressesByCityId(Long cityId) {

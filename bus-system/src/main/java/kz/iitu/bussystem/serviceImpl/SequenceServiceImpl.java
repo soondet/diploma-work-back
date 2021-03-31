@@ -15,6 +15,11 @@ public class SequenceServiceImpl implements SequenceService {
     private SequenceRepository sequenceRepository;
 
     @Override
+    public Collection<Sequence> getSequence() {
+        return sequenceRepository.findAll();
+    }
+
+    @Override
     public Collection<Sequence> getSequenceByRouteId(Long routeId) {
         return sequenceRepository.findByRoute_Id(routeId);
     }

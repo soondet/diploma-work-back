@@ -14,20 +14,24 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JsonIgnore
     @OneToMany(mappedBy = "route")
     private Set<Sequence> sequences;
 
     @Column(name = "distance")
     private Double distance;
+    @Column(name = "price")
+    private Double price;
 
     public Route() {
     }
 
-    public Route(Long id, Set<Sequence> sequences, Double distance) {
+    public Route(Long id, Set<Sequence> sequences, Double distance, Double price) {
         this.id = id;
         this.sequences = sequences;
         this.distance = distance;
+        this.price = price;
     }
 
     public Long getId() {
@@ -52,5 +56,13 @@ public class Route {
 
     public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

@@ -13,6 +13,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JsonIgnore
     @OneToMany(mappedBy = "address")
     private List<Park> park;

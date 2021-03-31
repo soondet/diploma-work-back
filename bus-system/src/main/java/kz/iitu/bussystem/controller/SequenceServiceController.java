@@ -13,6 +13,10 @@ public class SequenceServiceController {
     @Autowired
     SequenceService sequenceService;
 
+    @GetMapping(value = "/get")
+    public ResponseEntity<Object> getSequence() {
+        return new ResponseEntity<>(sequenceService.getSequence(), HttpStatus.OK);
+    }
     @GetMapping(value = "/byRoute")
     public ResponseEntity<Object> getSequenceByRouteId(@RequestParam Long routeId) {
         return new ResponseEntity<>(sequenceService.getSequenceByRouteId(routeId), HttpStatus.OK);

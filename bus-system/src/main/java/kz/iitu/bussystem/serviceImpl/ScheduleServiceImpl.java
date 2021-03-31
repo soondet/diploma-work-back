@@ -2,10 +2,8 @@ package kz.iitu.bussystem.serviceImpl;
 
 import kz.iitu.bussystem.dto.AddressesByRouteIdDTO;
 import kz.iitu.bussystem.dto.ScheduleWithAddressesDTO;
-import kz.iitu.bussystem.entity.Address;
 import kz.iitu.bussystem.entity.Schedule;
 import kz.iitu.bussystem.entity.Sequence;
-import kz.iitu.bussystem.repository.AddressRepository;
 import kz.iitu.bussystem.repository.RouteRepository;
 import kz.iitu.bussystem.repository.ScheduleRepository;
 import kz.iitu.bussystem.repository.SequenceRepository;
@@ -13,6 +11,7 @@ import kz.iitu.bussystem.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +27,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     private RouteRepository routeRepository;
 
     @Override
-    public List<ScheduleWithAddressesDTO> getSchedulesByRouteId(Long addressFromId, Long addressToId) {
+    public Collection<Schedule> getSchedule() {
+        return scheduleRepository.findAll();
+    }
+
+
+    @Override
+    public List<ScheduleWithAddressesDTO> getSchedulesByRouteId(Long addressFromId, Long addressToId, String date) {
         List<Sequence> sequencesFrom = sequenceRepository.findByAddress_Id(addressFromId);
         List<Sequence> sequencesTo = sequenceRepository.findByAddress_Id(addressToId);
         List<Sequence> sequences = new ArrayList<>();
@@ -41,6 +46,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         List<Long> ids = sequences.stream()
                 .map(e -> e.getRoute().getId()).collect(Collectors.toList());
         ids.stream().forEach(e -> schedules.addAll(scheduleRepository.findByRoute_Id(e)));
+
         schedules.stream().forEach(
                 e -> scheduleWithAddressesDTOS.add(
                         new ScheduleWithAddressesDTO(
@@ -48,15 +54,22 @@ public class ScheduleServiceImpl implements ScheduleService {
                                 e.getStatus(),
                                 e.getDate(),
                                 e.getPrice(),
+                                e.getAvailableSeatNumber(),
+
                                 e.getRoute().getId(),
                                 e.getRoute().getDistance(),
+
                                 e.getBus().getId(),
                                 e.getBus().getStateNumber(),
                                 e.getBus().getAvailability(),
-                                e.getBus().getAvailableSeatNumber(),
+                                e.getBus().getSeatNumber(),
+
                                 e.getBus().getBusModel().getId(),
                                 e.getBus().getBusModel().getModelName(),
                                 e.getBus().getBusModel().getSeatNumber(),
+                                e.getBus().getBusModel().getX(),
+                                e.getBus().getBusModel().getY(),
+
                                 sequenceRepository.findByRoute_Id(e.getRoute().getId()).stream().map(
                                         x -> new AddressesByRouteIdDTO(
                                                 x.getId(),
@@ -69,11 +82,9 @@ public class ScheduleServiceImpl implements ScheduleService {
                                                 x.getSequenceNumber())).collect(Collectors.toList())
                         )
                 ));
-        return scheduleWithAddressesDTOS;
+
+        return scheduleWithAddressesDTOS.stream().filter(e -> new SimpleDateFormat("yyyy-MM-dd").format(e.getScheduleDate()).equals(date)).collect(Collectors.toList());
     }
 
-    @Override
-    public Collection<Schedule> getSchedule() {
-        return scheduleRepository.findAll();
-    }
+
 }
