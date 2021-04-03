@@ -1,15 +1,10 @@
 package kz.iitu.bussystem.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(schema = "public", name = "booking")
-public class Booking {
+@Table(schema = "public", name = "booked_seat")
+public class BookedSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,18 +14,15 @@ public class Booking {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
-    @Column(name = "booking_time")
-    private Date bookingTime;
     @Column(name = "seat_no")
     private Integer seatNo;
 
-    public Booking() {
+    public BookedSeat() {
     }
 
-    public Booking(Long id, Schedule schedule, Date bookingTime, Integer seatNo) {
+    public BookedSeat(Long id, Schedule schedule, Integer seatNo) {
         this.id = id;
         this.schedule = schedule;
-        this.bookingTime = bookingTime;
         this.seatNo = seatNo;
     }
 
@@ -48,14 +40,6 @@ public class Booking {
 
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    public Date getBookingTime() {
-        return bookingTime;
-    }
-
-    public void setBookingTime(Date bookingTime) {
-        this.bookingTime = bookingTime;
     }
 
     public Integer getSeatNo() {

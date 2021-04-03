@@ -20,6 +20,9 @@ public class Schedule {
     @JsonIgnore
     @OneToMany(mappedBy = "schedule")
     private List<Booking> bookings;
+    @JsonIgnore
+    @OneToMany(mappedBy = "schedule")
+    private List<BookedSeat> bookedSeats;
 
     //Foreign Key
     @ManyToOne
@@ -41,9 +44,10 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(Long id, List<Booking> bookings, Route route, Bus bus, Boolean status, Date date, Double price, Integer availableSeatNumber) {
+    public Schedule(Long id, List<Booking> bookings, List<BookedSeat> bookedSeats, Route route, Bus bus, Boolean status, Date date, Double price, Integer availableSeatNumber) {
         this.id = id;
         this.bookings = bookings;
+        this.bookedSeats = bookedSeats;
         this.route = route;
         this.bus = bus;
         this.status = status;
@@ -66,6 +70,14 @@ public class Schedule {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public List<BookedSeat> getBookedSeats() {
+        return bookedSeats;
+    }
+
+    public void setBookedSeats(List<BookedSeat> bookedSeats) {
+        this.bookedSeats = bookedSeats;
     }
 
     public Route getRoute() {

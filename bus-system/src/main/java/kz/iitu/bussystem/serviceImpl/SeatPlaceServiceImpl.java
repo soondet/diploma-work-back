@@ -18,4 +18,9 @@ public class SeatPlaceServiceImpl implements SeatPlaceService {
     public Collection<SeatPlace> getSeatPlace() {
         return seatPlaceRepository.findAll();
     }
+
+    @Override
+    public Collection<SeatPlace> getSeatPlaceByBusId(Long busModelId) {
+        return seatPlaceRepository.findByBusModel_Id(busModelId);
+    }
 }

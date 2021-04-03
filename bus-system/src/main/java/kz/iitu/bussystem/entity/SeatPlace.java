@@ -22,15 +22,21 @@ public class SeatPlace {
     private Integer seatNo;
     @Column(name = "seat_type")
     private String seatType;
+    @Column(name = "seat_coordinate_X")
+    private Integer seatCoordinateX;
+    @Column(name = "seat_coordinate_Y")
+    private Integer seatCoordinateY;
 
     public SeatPlace() {
     }
 
-    public SeatPlace(Long id, BusModel busModel, Integer seatNo, String seatType) {
+    public SeatPlace(Long id, BusModel busModel, Integer seatNo, String seatType, Integer seatCoordinateX, Integer seatCoordinateY) {
         this.id = id;
         this.busModel = busModel;
         this.seatNo = seatNo;
         this.seatType = seatType;
+        this.seatCoordinateX = seatCoordinateX;
+        this.seatCoordinateY = seatCoordinateY;
     }
 
     public Long getId() {
@@ -63,5 +69,21 @@ public class SeatPlace {
 
     public void setSeatType(String seatType) {
         this.seatType = seatType;
+    }
+
+    public Integer getSeatCoordinateX() {
+        return seatCoordinateX;
+    }
+
+    public void setSeatCoordinateX(Integer seatCoordinateX) {
+        this.seatCoordinateX = seatCoordinateX;
+    }
+
+    public Integer getSeatCoordinateY() {
+        return seatCoordinateY;
+    }
+
+    public void setSeatCoordinateY(Integer seatCoordinateY) {
+        this.seatCoordinateY = seatCoordinateY;
     }
 }

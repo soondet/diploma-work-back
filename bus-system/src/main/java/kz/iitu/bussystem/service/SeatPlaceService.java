@@ -7,4 +7,6 @@ import java.util.Collection;
 
 public interface SeatPlaceService {
     public abstract Collection<SeatPlace> getSeatPlace();
+    public abstract Collection<SeatPlace> getSeatPlaceByBusId(Long busModelId);
+
 }
