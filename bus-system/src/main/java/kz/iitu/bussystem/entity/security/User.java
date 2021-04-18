@@ -1,6 +1,11 @@
 package kz.iitu.bussystem.entity.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import kz.iitu.bussystem.entity.Booking;
+import kz.iitu.bussystem.entity.Bus;
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -39,6 +44,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
+
     public User() {
     }
 
@@ -47,6 +56,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
 
     public Long getId() {
         return id;
@@ -86,5 +96,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

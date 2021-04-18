@@ -2,6 +2,7 @@ package kz.iitu.bussystem.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kz.iitu.bussystem.entity.security.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,10 @@ public class Booking {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "booking_time")
     private Date bookingTime;
     @Column(name = "seat_no")
@@ -27,12 +32,21 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(Long id, Schedule schedule, Date bookingTime, Integer seatNo) {
+    public Booking(Long id, Schedule schedule, User user, Date bookingTime, Integer seatNo) {
         this.id = id;
         this.schedule = schedule;
+        this.user = user;
         this.bookingTime = bookingTime;
         this.seatNo = seatNo;
     }
+
+    public Booking(Schedule schedule, User user, Date bookingTime, Integer seatNo) {
+        this.schedule = schedule;
+        this.user = user;
+        this.bookingTime = bookingTime;
+        this.seatNo = seatNo;
+    }
+
 
     public Long getId() {
         return id;
@@ -64,5 +78,13 @@ public class Booking {
 
     public void setSeatNo(Integer seatNo) {
         this.seatNo = seatNo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

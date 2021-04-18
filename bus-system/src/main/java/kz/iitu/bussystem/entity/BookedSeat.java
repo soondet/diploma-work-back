@@ -26,6 +26,11 @@ public class BookedSeat {
         this.seatNo = seatNo;
     }
 
+    public BookedSeat( Schedule schedule, Integer seatNo) {
+        this.schedule = schedule;
+        this.seatNo = seatNo;
+    }
+
     public Long getId() {
         return id;
     }
