@@ -21,4 +21,9 @@ public class SequenceServiceController {
     public ResponseEntity<Object> getSequenceByRouteId(@RequestParam Long routeId) {
         return new ResponseEntity<>(sequenceService.getSequenceByRouteId(routeId), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/addresses")
+    public ResponseEntity<Object> getSequenceAddressesByRouteId(@RequestParam Long routeId) {
+        return new ResponseEntity<>(sequenceService.getSequenceAddressesByRouteId(routeId), HttpStatus.OK);
+    }
 }

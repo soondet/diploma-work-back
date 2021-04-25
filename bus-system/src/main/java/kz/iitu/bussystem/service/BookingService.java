@@ -13,4 +13,6 @@ public interface BookingService {
     public abstract void createBooking(Booking booking);
 
     public abstract void createBooking(BookingDTO bookingDTO);
+
+    public abstract Collection<Booking> getBookingByUserId(Long userId);
 }

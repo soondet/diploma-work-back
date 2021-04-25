@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,7 +80,9 @@ public class ScheduleServiceImpl implements ScheduleService {
                                                 x.getAddress().getAddressName(),
                                                 x.getAddress().getCity().getId(),
                                                 x.getAddress().getCity().getCityName(),
-                                                x.getSequenceNumber())).collect(Collectors.toList())
+                                                x.getSequenceNumber()))
+                                        .sorted(Comparator.comparing(AddressesByRouteIdDTO::getSequenceNumber))
+                                        .collect(Collectors.toList())
                         )
                 ));
 

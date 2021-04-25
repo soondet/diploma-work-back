@@ -21,6 +21,11 @@ public class BookingServiceController {
         return new ResponseEntity<>(bookingService.getBooking(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getByUser")
+    public ResponseEntity<Object> getBookingByUser(@RequestParam Long userId) {
+        return new ResponseEntity<>(bookingService.getBookingByUserId(userId), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/create")
     public ResponseEntity<Object> createBooking(@RequestBody Booking booking) {
         bookingService.createBooking(booking);
@@ -32,4 +37,5 @@ public class BookingServiceController {
         bookingService.createBooking(bookingDTO);
         return new ResponseEntity<>("Booking is created successfully", HttpStatus.CREATED);
     }
+
 }

@@ -37,8 +37,14 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void createBooking(BookingDTO bookingDTO) {
         Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId()).orElseThrow(() -> new NullPointerException("No data found!"));
+        schedule.setAvailableSeatNumber(schedule.getAvailableSeatNumber() - 1);
         User user = userRepository.findById(bookingDTO.getUserId()).orElseThrow(() -> new NullPointerException("No data found!"));
         Booking booking = new Booking(schedule, user, new Date(), bookingDTO.getSeatNo());
         bookingRepository.save(booking);
+    }
+
+    @Override
+    public Collection<Booking> getBookingByUserId(Long userId) {
+        return bookingRepository.findByUser_Id(userId);
     }
 }

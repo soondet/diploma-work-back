@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Spring Boot - Thymeleaf</title>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body class="flex items-center justify-center h-screen">
+<div class="rounded-lg border shadow-lg p-10 w-3/5">
+    <div class="flex flex-row justify-between pb-4">
+        <div>
+            <h2 class="text-xl font-bold">Booking #<span class="text-green-600" th:text="${bookingEntry.id}"></span>
+            </h2>
+        </div>
+        <div>
+            <div class="text-xl font-bold" th:text="${bookingEntry.id}"></div>
+        </div>
+    </div>
+    <div class="flex flex-col pb-8">
+        <div class="pb-2">
+            <h2 class="text-xl font-bold">Booking Details</h2>
+        </div>
+        <div>
+            <h6>Booking Time: <span th:text="${bookingEntry.bookingTime}"></span></h6>
+        </div>
+        <div>
+            <h6>Seat No: <span th:text="${bookingEntry.seatNo}"></span></h6>
+        </div>
+        <div>
+            <h6>Route Distance: <span th:text="${bookingEntry.schedule.route.distance}"></span></h6>
+        </div>
+        <div>
+            <h6>Price: <span th:text="${bookingEntry.schedule.route.price}"></span></h6>
+        </div>
+    </div>
+    <div class="flex flex-col pb-8">
+        <div class="pb-2">
+            <h2 class="text-xl font-bold">Bus Details</h2>
+        </div>
+
+        <div>
+            <h6>Bus Model: <span th:text="${bookingEntry.schedule.bus.busModel.modelName}"></span></h6>
+        </div>
+        <div>
+            <h6>Seat Number: <span th:text="${bookingEntry.schedule.bus.busModel.seatNumber}"></span></h6>
+        </div>
+        <div>
+            <h6>Bus state number: <span th:text="${bookingEntry.schedule.bus.stateNumber}"></span></h6>
+        </div>
+        <div>
+            <h6>Price:<span th:text="${bookingEntry.schedule.route.price}"></span></h6>
+        </div>
+    </div>
+    <div class="pb-2">
+        <h2 class="text-xl font-bold">Route Details</h2>
+    </div>
+    <ul th:each="address : ${addressEntries}">
+        <li><span th:text="${address.sequenceNumber}">. </span> <span th:text="${address.cityName}"></span> <span
+                th:text="${address.addressName}"></span></li>
+    </ul>
+
+
+</div>
+</body>
+</html>
