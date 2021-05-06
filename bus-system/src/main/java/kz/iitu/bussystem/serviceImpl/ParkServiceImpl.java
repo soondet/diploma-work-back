@@ -17,4 +17,9 @@ public class ParkServiceImpl implements ParkService {
     public Collection<Park> getPark() {
         return parkRepository.findAll();
     }
+
+    @Override
+    public Collection<Park> getParksByCity(Long cityId) {
+        return parkRepository.findByAddress_City_Id(cityId);
+    }
 }

@@ -48,6 +48,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bus_id", referencedColumnName = "id")
+    private Bus bus;
+
     public User() {
     }
 
@@ -104,5 +109,13 @@ public class User {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
     }
 }

@@ -20,6 +20,7 @@ import kz.iitu.bussystem.repository.security.UserRepository;
 import kz.iitu.bussystem.security.jwt.JwtUtils;
 import kz.iitu.bussystem.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,7 +67,7 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles, userDetails.getBus()));
     }
 
     @PostMapping("/signup")
@@ -122,6 +123,24 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+    @PostMapping("/save")
+    public ResponseEntity<Object> assignModeratorRole(@RequestBody User user) {
+        userRepository.save(user);
+        return new ResponseEntity<>("BookedSeat is created successfully", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get")
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+//    @GetMapping("/getMod")
+//    public List<User> getUsersMod() {
+//        List<User> = userRepository.findAll().stream().filter(x->
+//                x.getRoles().)
+//        return userRepository.findAll().;
+//    }
 
 //    @PostMapping("/changerole")
 //    public ResponseEntity<?> changeUserRole(@RequestParam Long id, @RequestBody Set<Role> roles) {

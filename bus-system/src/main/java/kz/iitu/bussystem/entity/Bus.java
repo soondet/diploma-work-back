@@ -1,6 +1,7 @@
 package kz.iitu.bussystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kz.iitu.bussystem.entity.security.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +17,9 @@ public class Bus {
     @JsonIgnore
     @OneToMany(mappedBy = "bus")
     private List<Schedule> schedules;
+    @JsonIgnore
+    @OneToOne(mappedBy = "bus")
+    private User user;
 
     //Foreign Key
     @ManyToOne
@@ -35,9 +39,11 @@ public class Bus {
     public Bus() {
     }
 
-    public Bus(Long id, List<Schedule> schedules, Park park, BusModel busModel, String stateNumber, String availability, Integer seatNumber) {
+
+    public Bus(Long id, List<Schedule> schedules, User user, Park park, BusModel busModel, String stateNumber, String availability, Integer seatNumber) {
         this.id = id;
         this.schedules = schedules;
+        this.user = user;
         this.park = park;
         this.busModel = busModel;
         this.stateNumber = stateNumber;
@@ -99,5 +105,13 @@ public class Bus {
 
     public void setSeatNumber(Integer seatNumber) {
         this.seatNumber = seatNumber;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

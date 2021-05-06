@@ -7,4 +7,7 @@ import java.util.Collection;
 
 public interface ParkService {
     public abstract Collection<Park> getPark();
+
+    public abstract Collection<Park> getParksByCity(Long cityId);
+
 }

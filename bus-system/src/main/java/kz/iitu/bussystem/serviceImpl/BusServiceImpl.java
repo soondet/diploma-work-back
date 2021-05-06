@@ -17,4 +17,19 @@ public class BusServiceImpl implements BusService {
     public Collection<Bus> getBus() {
         return busRepository.findAll();
     }
+
+    @Override
+    public void createBus(Bus bus) {
+        busRepository.save(bus);
+    }
+
+    @Override
+    public Collection<Bus> getBusByPark(Long parkId) {
+        return busRepository.findByPark_Id(parkId);
+    }
+
+    @Override
+    public void deleteById(Long busId) {
+        busRepository.deleteById(busId);
+    }
 }

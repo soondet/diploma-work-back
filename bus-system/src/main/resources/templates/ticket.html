@@ -62,6 +62,10 @@
                 th:text="${address.addressName}"></span></li>
     </ul>
 
+    <div>
+        <img  th:src="@{'data:image/jpeg;base64,'+${qr}}" />
+    </div>
+
 
 </div>
 </body>
