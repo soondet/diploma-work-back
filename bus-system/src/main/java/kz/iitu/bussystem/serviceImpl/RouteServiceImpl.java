@@ -18,4 +18,9 @@ public class RouteServiceImpl implements RouteService {
     public Collection<Route> getRoute() {
         return routeRepository.findAll();
     }
+
+    @Override
+    public void createRoute(Route route) {
+        routeRepository.save(route);
+    }
 }

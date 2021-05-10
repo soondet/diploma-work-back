@@ -1,6 +1,7 @@
 package kz.iitu.bussystem.serviceImpl;
 
 import kz.iitu.bussystem.dto.AddressesByRouteIdDTO;
+import kz.iitu.bussystem.entity.Address;
 import kz.iitu.bussystem.entity.Sequence;
 import kz.iitu.bussystem.repository.SequenceRepository;
 import kz.iitu.bussystem.service.SequenceService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +30,12 @@ public class SequenceServiceImpl implements SequenceService {
     }
 
     @Override
+    public Collection<Long> getSequenceByAddressIds(List<Long> addressIds) {
+        return sequenceRepository.findByAddressesIds(addressIds);
+    }
+
+
+    @Override
     public Collection<AddressesByRouteIdDTO> getSequenceAddressesByRouteId(Long routeId) {
         return sequenceRepository.findByRoute_Id(routeId).stream().map(
                 x -> new AddressesByRouteIdDTO(
@@ -41,6 +49,11 @@ public class SequenceServiceImpl implements SequenceService {
                         x.getSequenceNumber()))
                 .sorted(Comparator.comparing(AddressesByRouteIdDTO::getSequenceNumber))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void createSequence(Sequence sequence) {
+        sequenceRepository.save(sequence);
     }
 
 
