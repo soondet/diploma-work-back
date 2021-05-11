@@ -1,6 +1,8 @@
 package kz.iitu.bussystem.controller;
 
 import kz.iitu.bussystem.dto.BookedSeatDTO;
+import kz.iitu.bussystem.entity.BookedSeat;
+import kz.iitu.bussystem.entity.Schedule;
 import kz.iitu.bussystem.service.BookedSeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,14 @@ public class BookedSeatServiceController {
     }
 
     @PostMapping(value = "/createByIds")
-    public ResponseEntity<Object> createBookedSeat(@RequestBody BookedSeatDTO bookedSeatDTO) {
+    public ResponseEntity<Object> createBookedSeatByIds(@RequestBody BookedSeatDTO bookedSeatDTO) {
         bookedSeatService.createBookedSeat(bookedSeatDTO);
         return new ResponseEntity<>("BookedSeat is created successfully", HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<Object> createBookedSeat(@RequestBody BookedSeat bookedSeat) {
+        bookedSeatService.createBookedSeat(bookedSeat);
+        return new ResponseEntity<>("BookedSeat  is created successfully", HttpStatus.CREATED);
     }
 }

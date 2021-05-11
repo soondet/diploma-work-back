@@ -106,7 +106,8 @@ public class PDFController {
                 .sorted(Comparator.comparing(AddressesByRouteIdDTO::getSequenceNumber))
                 .collect(Collectors.toList());
         /* Create HTML using Thymeleaf template Engine */
-        String asd = "Nurlihan krasavchik";
+        String asd = "User username:" + booking.getUser().getUsername() + " Bus stateNumber:" +booking.getSchedule().getBus().getStateNumber() + " Seat NO:" + booking.getSeatNo()    ;
+
         ByteArrayOutputStream stream = QRCode
                 .from(asd)
                 .withSize(250, 250)
@@ -161,7 +162,8 @@ public class PDFController {
                 .sorted(Comparator.comparing(AddressesByRouteIdDTO::getSequenceNumber))
                 .collect(Collectors.toList());
         /* Create HTML using Thymeleaf template Engine */
-        String asd = "Nice";
+        String asd = "User username:" + booking.getUser().getUsername() + " Bus stateNumber:" +booking.getSchedule().getBus().getStateNumber() + " Seat NO:" + booking.getSeatNo()    ;
+
         ByteArrayOutputStream stream = QRCode
                 .from(asd)
                 .withSize(250, 250)

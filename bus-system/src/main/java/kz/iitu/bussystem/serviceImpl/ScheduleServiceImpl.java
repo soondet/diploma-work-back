@@ -9,13 +9,12 @@ import kz.iitu.bussystem.repository.ScheduleRepository;
 import kz.iitu.bussystem.repository.SequenceRepository;
 import kz.iitu.bussystem.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,6 +86,16 @@ public class ScheduleServiceImpl implements ScheduleService {
                 ));
 
         return scheduleWithAddressesDTOS.stream().filter(e -> new SimpleDateFormat("yyyy-MM-dd").format(e.getScheduleDate()).equals(date)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void createSchedule(Schedule schedule) {
+        scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public List<Schedule> getScheduleByRouteIdBusIdDate(Long routeId, Long busId, String date) {
+        return scheduleRepository.findByRoute_IdAndBus_Id(routeId, busId).stream().filter(e -> new SimpleDateFormat("yyyy-MM-dd").format(e.getDate()).equals(date)).collect(Collectors.toList());
     }
 
 

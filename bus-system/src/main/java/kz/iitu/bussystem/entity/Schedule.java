@@ -1,5 +1,6 @@
 package kz.iitu.bussystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
@@ -35,6 +36,7 @@ public class Schedule {
     @Column(name = "status")
     private Boolean status;
     @Column(name = "date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date date;
     @Column(name = "price")
     private Double price;

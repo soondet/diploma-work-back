@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +29,14 @@ public class SequenceServiceImpl implements SequenceService {
 
     @Override
     public Collection<Long> getSequenceByAddressIds(List<Long> addressIds) {
-        return sequenceRepository.findByAddressesIds(addressIds);
+        List<Long> availableRoutes = sequenceRepository.findByAddressesIds(addressIds);
+        ArrayList<Long> foundedRoutes = new ArrayList<>();
+        availableRoutes.forEach((e) -> {
+            if (sequenceRepository.findByRoute_Id(e).stream().map(x -> x.getAddress().getId()).collect(Collectors.toList()).containsAll(addressIds)) {
+                foundedRoutes.add(e);
+            }
+        });
+        return foundedRoutes;
     }
 
 

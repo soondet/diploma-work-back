@@ -1,6 +1,7 @@
 package kz.iitu.bussystem.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kz.iitu.bussystem.entity.security.User;
 
@@ -25,6 +26,7 @@ public class Booking {
     private User user;
 
     @Column(name = "booking_time")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date bookingTime;
     @Column(name = "seat_no")
     private Integer seatNo;

@@ -37,4 +37,9 @@ public class BookedSeatServiceImpl implements BookedSeatService {
         Schedule schedule = scheduleRepository.findById(bookedSeatDTO.getScheduleId()).orElseThrow(() -> new NullPointerException("No data found!"));
         bookedSeatRepository.save(new BookedSeat(schedule, bookedSeatDTO.getSeatNo()));
     }
+
+    @Override
+    public void createBookedSeat(BookedSeat bookedSeat) {
+        bookedSeatRepository.save(bookedSeat);
+    }
 }

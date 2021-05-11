@@ -17,6 +17,7 @@ public interface SequenceRepository extends JpaRepository<Sequence, Long> {
     @Query("SELECT DISTINCT s.route.id FROM Sequence s where s.address.id in (:addressIds)")
     List<Long> findByAddressesIds(@Param("addressIds") List<Long> addressIds);
 
+
     List<Sequence> findByAddress_Id(Long addressId);
 
     List<Sequence> findByRoute_Id(Long routeId);
