@@ -38,4 +38,9 @@ public class BookingServiceController {
         return new ResponseEntity<>("Booking is created successfully", HttpStatus.CREATED);
     }
 
+    @GetMapping(value = "/getById")
+    public ResponseEntity<Object> getBookingById(@RequestParam Long bookingId) {
+        return new ResponseEntity<>(bookingService.getBookingById(bookingId), HttpStatus.OK);
+    }
+
 }

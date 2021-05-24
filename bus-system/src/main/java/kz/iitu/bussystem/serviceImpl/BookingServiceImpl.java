@@ -47,4 +47,9 @@ public class BookingServiceImpl implements BookingService {
     public Collection<Booking> getBookingByUserId(Long userId) {
         return bookingRepository.findByUser_Id(userId);
     }
+
+    @Override
+    public Booking getBookingById(Long bookingId) {
+        return bookingRepository.findById(bookingId).orElseThrow(() -> new NullPointerException("No data found!"));
+    }
 }

@@ -1,16 +1,11 @@
 package kz.iitu.bussystem.controller;
 
-import com.google.common.primitives.Bytes;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import kz.iitu.bussystem.dto.AddressesByRouteIdDTO;
 import kz.iitu.bussystem.entity.Booking;
 import kz.iitu.bussystem.repository.BookingRepository;
 import kz.iitu.bussystem.repository.SequenceRepository;
+import kz.iitu.bussystem.util.email.MailConfig;
 import net.glxn.qrgen.javase.QRCode;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
+import org.springframework.mail.javamail.*;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
@@ -36,24 +30,16 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "*")
@@ -61,7 +47,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/pdf")
 public class PDFController {
     @Autowired
-    public JavaMailSender emailSender;
+    public MailConfig emailSender;
 
     @Autowired
     private BookingRepository bookingRepository;
@@ -72,7 +58,11 @@ public class PDFController {
     @Autowired
     ServletContext servletContext;
 
+//    @Value("${spring.mail.username}")
+//    private String emailFrom;
+
     private final TemplateEngine templateEngine;
+//    private final JavaMailSenderImpl emailSender;
 
     public PDFController(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
@@ -106,7 +96,7 @@ public class PDFController {
                 .sorted(Comparator.comparing(AddressesByRouteIdDTO::getSequenceNumber))
                 .collect(Collectors.toList());
         /* Create HTML using Thymeleaf template Engine */
-        String asd = "User username:" + booking.getUser().getUsername() + " Bus stateNumber:" +booking.getSchedule().getBus().getStateNumber() + " Seat NO:" + booking.getSeatNo()    ;
+        String asd = "User username:" + booking.getUser().getUsername() + " Bus stateNumber:" + booking.getSchedule().getBus().getStateNumber() + " Seat NO:" + booking.getSeatNo();
 
         ByteArrayOutputStream stream = QRCode
                 .from(asd)
@@ -143,9 +133,6 @@ public class PDFController {
     @ResponseBody
     @GetMapping(path = "/send")
     public String getAsPDF(@RequestParam Long id, @RequestParam String email, HttpServletRequest request, HttpServletResponse response) throws IOException, MessagingException, WriterException {
-
-
-
         /* Do Business Logic*/
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new NullPointerException("No data found!"));
         Collection<AddressesByRouteIdDTO> addressesByRouteIdDTOS = sequenceRepository.findByRoute_Id(booking.getSchedule().getRoute().getId())
@@ -162,7 +149,7 @@ public class PDFController {
                 .sorted(Comparator.comparing(AddressesByRouteIdDTO::getSequenceNumber))
                 .collect(Collectors.toList());
         /* Create HTML using Thymeleaf template Engine */
-        String asd = "User username:" + booking.getUser().getUsername() + " Bus stateNumber:" +booking.getSchedule().getBus().getStateNumber() + " Seat NO:" + booking.getSeatNo()    ;
+        String asd = "User username:" + booking.getUser().getUsername() + " Bus stateNumber:" + booking.getSchedule().getBus().getStateNumber() + " Seat NO:" + booking.getSeatNo();
 
         ByteArrayOutputStream stream = QRCode
                 .from(asd)
@@ -189,7 +176,7 @@ public class PDFController {
         byte[] bytes = target.toByteArray();
 
 
-        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessage message = emailSender.getJavaMailSender().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(email);
@@ -197,7 +184,7 @@ public class PDFController {
         helper.setText("You have successfully bought a ticket, you can see all the details in the attached file!");
         helper.addAttachment("ticket.pdf", new ByteArrayResource(bytes));
 
-        emailSender.send(message);
+        emailSender.getJavaMailSender().send(message);
 
         return "Email Sent!";
     }
